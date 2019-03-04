@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Train Time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container mx-5">
+        <div class="jumbotron bg-dark text-white">
+            <div class="display-3 text-center ">
+                Anytime is Train Time
+            </div>
+            <p class="text-center display-5  ">Choo Choo. Chee Chee.</p>
+
+        </div>
+        <table class="table" id="dataTable">
+            <thead class="thead-dark">
+                <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Train Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency(min)</th>
+                    <th scope="col">Next Arrival</th>
+                    <th scope="col">Minutes Away</th>
+                </tr>
+            </thead>
+            <tbody id="tableData">
+            </tbody>
+
+        </table>
+        <div class="row mt-4">
+            <div class="col-md-12 p-2 card">
+                <div class="card-header bg-dark text-white">
+                    Add Train
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="trainName">Train Name:</label>
+                        <input type="text" class="form-control" id="trainName" aria-describedby="empName" placeholder="Train Name....">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" class="form-control" id="destination" aria-describedby="destination" placeholder="Destination.....">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstTrainTime">First Train Time (HH:MM -military time)</label>
+                        <input type="time" class="form-control" id="firstTrainTime" aria-describedby="firstTrainTime" placeholder="HH:MM AM/PM">
+                    </div>
+                    <div class="form-group">
+                        <label for="frequency">Frequecy</label>
+                        <input type="number" class="form-control" id="frequency" aria-describedby="frequency"
+                            placeholder="MMDDYYYY">
+                    </div>
+                    <button type="button" class="btn btn-dark" id="addButton">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+        <script src="logic.js"></script>
+
+</html>
