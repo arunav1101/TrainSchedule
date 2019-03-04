@@ -22,6 +22,12 @@ var newEmpId = 0;
 var nextArrival = '';
 var tMinutesTillTrain = '';
 
+async function getUserIp() {
+    let promise = $.getJSON('https://ipapi.co/json/', function (data) {    
+    return data;
+    });
+    return await promise;
+}
 
 function updateTime() {
 
@@ -36,14 +42,14 @@ function updateTime() {
             });
         });
     });
-    location.reload();   
+    location.reload();
 }
 
 setInterval(function () {
     updateTime();
 }, 1000 * 60);
 
- function nextTime(firstTime) {
+function nextTime(firstTime) {
     var firstTimeConverted = moment(firstTime, "HH:mm");
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
     var tRemainder = diffTime % frequency;
@@ -61,16 +67,19 @@ $("#addButton").on("click", function (event) {
     destination = $('#destination').val().trim();
     firstTrainTime = $('#firstTrainTime').val().trim();
     frequency = $('#frequency').val().trim();
-    nextTime(firstTrainTime);
-    database.ref().push({
-        name: trainName,
-        destination: destination,
-        firstTrainTime: firstTrainTime,
-        frequency: frequency,
-        nextArrival: nextArrival,
-        minsAway: tMinutesTillTrain,
-    });
 
+    nextTime(firstTrainTime);
+    getUserIp().then((data) => {
+        database.ref().push({
+            name: trainName,
+            destination: destination,
+            firstTrainTime: firstTrainTime,
+            frequency: frequency,
+            nextArrival: nextArrival,
+            minsAway: tMinutesTillTrain,
+            systemDetails: data
+        });
+    })
 })
 
 database.ref().on("child_added", function (snapshot) {
