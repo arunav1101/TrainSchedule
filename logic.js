@@ -39,7 +39,6 @@ function nextTime(firstTime) {
 }
 
 function updateTime() {
-    console.log("updateTime! I am called")
     database.ref().on("value", function (snapshot) {
         snapshot.forEach(function (child) {
             frequency = child.val().frequency;
