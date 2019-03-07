@@ -11,7 +11,6 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-
 var trainName = '';
 var destination = '';
 var firstTrainTime = '';
@@ -23,31 +22,11 @@ var nextArrival = '';
 var tMinutesTillTrain = '';
 
 async function getUserIp() {
-    let promise = $.getJSON('https://ipapi.co/json/', function (data) {    
-    return data;
+    let promise = $.getJSON('https://ipapi.co/json/', function (data) {
+        return data;
     });
     return await promise;
 }
-
-function updateTime() {
-
-    // let dbCon = firebase.database().ref();
-    database.ref().on("value", function (snapshot) {
-        snapshot.forEach(function (child) {
-            frequency = child.val().frequency;
-            nextTime(child.val().firstTrainTime)
-            child.ref.update({
-                nextArrival: nextArrival,
-                minsAway: tMinutesTillTrain,
-            });
-        });
-    });
-    location.reload();
-}
-
-setInterval(function () {
-    updateTime();
-}, 1000 * 60);
 
 function nextTime(firstTime) {
     var firstTimeConverted = moment(firstTime, "HH:mm");
@@ -55,10 +34,47 @@ function nextTime(firstTime) {
     var tRemainder = diffTime % frequency;
     tMinutesTillTrain = frequency - tRemainder;
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    nextArrival = moment(nextTrain).format("hh:mm")
+    nextArrival = moment(nextTrain).format("hh:mm");
     return;
 }
 
+function updateTime() {
+    console.log("updateTime! I am called")
+    database.ref().on("value", function (snapshot) {
+        snapshot.forEach(function (child) {
+            frequency = child.val().frequency;
+            nextTime(child.val().firstTrainTime);
+            $(`#${(child.val().name).replace(/\s/g, '')}`).empty();
+            $(`#${(child.val().name).replace(/\s/g, '')}`)
+                .append(`<td>${child.val().name}</td>
+                     <td>${child.val().destination}</td>
+                     <td>${child.val().frequency}</td>
+                     <td id="nextArrival">${nextArrival}</td>
+                     <td id="minsAway">${tMinutesTillTrain}</td>
+                     <td><button type="button" class="btn btn-dark table-hover" id=delete>Delete</button></td>`);
+        });
+    });
+}
+
+setInterval(function () {
+    updateTime();
+}, 1000 * 10);
+
+updateTime();
+
+$(document.body).on("click", "#delete", function (event) {
+    event.preventDefault();
+    let delValue = $(this).parents()[1].id;
+    database.ref().on("value", function (snapshot) {
+        snapshot.forEach(function (child) {
+            let dbValue = (child.val().name).replace(/\s/g, '')
+            if (dbValue === delValue) {
+                database.ref().child(child.key).remove();
+                location.reload();
+            }
+        });
+    })
+})
 
 $("#addButton").on("click", function (event) {
     event.preventDefault();
@@ -83,13 +99,10 @@ $("#addButton").on("click", function (event) {
 })
 
 database.ref().on("child_added", function (snapshot) {
-    //  console.log(snapshot.val().name);
-    $('#tableData').append(` <tr>
+    $('#tableData').append(`<tr id=${snapshot.val().name.replace(/\s/g, '')}>
                     <td>${snapshot.val().name}</td>
                     <td>${snapshot.val().destination}</td>
                     <td>${snapshot.val().frequency}</td>
-                    <td>${snapshot.val().nextArrival}</td>
-                    <td>${snapshot.val().minsAway}</td>
-                </tr>`)
-
+                    </tr>
+                    `)
 });

@@ -17,6 +17,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
+        <!-- <style>
+             button:hover{
+                disabled:"enabled"
+             }
+        </style> -->
 </head>
 
 <body>
@@ -29,8 +34,8 @@
             <p class="text-center display-5  ">Choo Choo. Chee Chee.</p>
 
         </div>
-        <table class="table" id="dataTable">
-            <thead class="thead-dark">
+        <table class="table text-center" id="dataTable" onload="updateTime()">
+            <thead class="thead-dark ">
                 <tr>
                     <!-- <th scope="col">#</th> -->
                     <th scope="col">Train Name</th>
@@ -38,6 +43,7 @@
                     <th scope="col">Frequency(min)</th>
                     <th scope="col">Next Arrival</th>
                     <th scope="col">Minutes Away</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody id="tableData">
@@ -57,12 +63,14 @@
 
                     <div class="form-group">
                         <label for="destination">Destination</label>
-                        <input type="text" class="form-control" id="destination" aria-describedby="destination" placeholder="Destination.....">
+                        <input type="text" class="form-control" id="destination" aria-describedby="destination"
+                            placeholder="Destination.....">
                     </div>
 
                     <div class="form-group">
-                        <label for="firstTrainTime">First Train Time (HH:MM -military time)</label>
-                        <input type="time" class="form-control" id="firstTrainTime" aria-describedby="firstTrainTime" placeholder="HH:MM AM/PM">
+                        <label for="firstTrainTime">First Train Time (HH:MM AM/PM)</label>
+                        <input type="time" class="form-control" id="firstTrainTime" aria-describedby="firstTrainTime"
+                            placeholder="HH:MM AM/PM">
                     </div>
                     <div class="form-group">
                         <label for="frequency">Frequency</label>
