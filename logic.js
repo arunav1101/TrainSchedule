@@ -20,10 +20,10 @@ var tBill = "";
 var newEmpId = 0;
 var nextArrival = "";
 var tMinutesTillTrain = "";
-
+// https://geo.ipify.org/api/v1?apiKey=at_Pb7FV6dZK5vdPrhUA6qpjN2JnRoj7&ipAddress=207.98.72.251
 async function getSystemDetails() {
   let promise = getUserIp().then(res2 => {
-    let sysDetails = $.getJSON(`http://api.ipstack.com/${res2.ip}?access_key=caec7113e8e16a0d0b881666d8edf90a`,
+    let sysDetails = $.getJSON(`https://geo.ipify.org/api/v1?apiKey=at_Pb7FV6dZK5vdPrhUA6qpjN2JnRoj7&ipAddress=${res2.ip}`,
       function(data) {
         return data;
       }
