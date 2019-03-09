@@ -23,7 +23,7 @@ var tMinutesTillTrain = "";
 
 async function getSystemDetails() {
   let promise = getUserIp().then(res2 => {
-    let sysDetails = $.getJSON(`http://api.ipstack.com/${res2.ip}?access_key=caec7113e8e16a0d0b881666d8edf90a`,
+    let sysDetails = $.getJSON(`https://api.ipstack.com/${res2.ip}?access_key=caec7113e8e16a0d0b881666d8edf90a`,
       function(data) {
         return data;
       }
